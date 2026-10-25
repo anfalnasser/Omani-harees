@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>هريس الوطن – لعبة الحال</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F1F7F2;--card:#fff;--ink:#12301F;--soft:#50665A;--green:#1D8E50;--red:#C9202F;--gold:#E0A526;--line:#D6E6DB;--scene:#E6F2E9;--ground:#C9DCCF;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0E1D15;--card:#16291D;--ink:#E9F5EC;--soft:#9DB9A6;--green:#4CC585;--red:#FF6B78;--gold:#F2C14E;--line:#29463A;--scene:#1B3326;--ground:#14261C}}
+:root[data-theme="dark"]{--bg:#0E1D15;--card:#16291D;--ink:#E9F5EC;--soft:#9DB9A6;--green:#4CC585;--red:#FF6B78;--gold:#F2C14E;--line:#29463A;--scene:#1B3326;--ground:#14261C}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg)}
+body{color:var(--ink);font-family:"IBM Plex Sans Arabic",Tahoma,"Segoe UI",sans-serif;line-height:1.8;min-height:100vh}
+.flag{height:7px;background:linear-gradient(90deg,#C9202F 0 33.3%,#fff 33.3% 66.6%,#1D8E50 66.6%)}
+.wrap{max-width:680px;margin:0 auto;padding:14px}
+h1{font-size:1.7rem;margin:.1em 0 0;color:var(--green);font-weight:700}
+.sub{margin:0;color:var(--soft);font-size:.95rem}
+.top{display:flex;justify-content:space-between;font-weight:600;margin-top:10px}
+.bar{height:9px;background:var(--line);border-radius:6px;overflow:hidden;margin-top:6px}
+.bar i{display:block;height:100%;width:0;background:var(--green);transition:width .4s}
+.scene{background:var(--card);border:2px solid var(--line);border-radius:18px;margin-top:12px;overflow:hidden}
+.say{margin:10px 12px 0;padding:8px 14px;background:var(--bg);border:2px solid var(--line);border-radius:14px;font-weight:600;min-height:48px}
+svg{display:block;width:100%;max-height:300px}
+.bg{fill:var(--scene)}.gr{fill:var(--ground)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;padding:0 12px 12px}
+.chip{padding:2px 12px;border-radius:20px;border:2px dashed var(--line);color:var(--soft);font-size:.9rem;transition:.3s}
+.chip.on{border:2px solid var(--green);background:var(--green);color:#fff;font-weight:600}
+.card{background:var(--card);border:2px solid var(--line);border-radius:18px;padding:16px;margin-top:12px}
+.tag{display:inline-block;background:var(--gold);color:#2b1d00;border-radius:20px;padding:0 12px;font-size:.85rem;font-weight:700}
+.q{font-size:1.2rem;font-weight:700;margin:8px 0 2px}
+button{font:inherit;cursor:pointer}
+.opt{display:block;width:100%;margin-top:8px;padding:10px;border-radius:12px;border:2px solid var(--line);background:var(--bg);color:var(--ink);font-size:1.1rem;font-weight:600}
+.opt:hover:not(:disabled){border-color:var(--green)}
+.opt.ok{background:var(--green);border-color:var(--green);color:#fff}
+.opt.no{background:var(--red);border-color:var(--red);color:#fff;opacity:.85}
+.btn{background:var(--green);color:#fff;border:0;border-radius:12px;padding:10px 24px;font-weight:700;font-size:1.05rem;margin-top:12px}
+.opt:focus-visible,.btn:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.fb{margin-top:10px;padding:10px 12px;border-radius:12px;background:var(--bg);border-right:5px solid var(--green)}
+.center{text-align:center}
+.stars{font-size:2.2rem;letter-spacing:6px}
+#sp.stir{animation:sw .5s ease-in-out infinite alternate;transform-origin:179px 138px}
+@keyframes sw{from{transform:rotate(-9deg)}to{transform:rotate(9deg)}}
+.fl{transform-box:fill-box;transform-origin:50% 100%;animation:fl .5s ease-in-out infinite alternate}
+@keyframes fl{to{transform:scaleY(1.2)}}
+.st{animation:st 2.4s linear infinite}
+@keyframes st{from{transform:translateY(0);opacity:.8}to{transform:translateY(-40px);opacity:0}}
+@media (prefers-reduced-motion:reduce){.fl,.st,#sp.stir{animation:none}.bar i,.chip{transition:none}}
+</style>
+</head>
+<body>
+<div class="flag"></div>
+<div class="wrap">
+<h1>هريس الوطن</h1>
+<p class="sub">لعبة الحال – اللغة العربية – الصف العاشر</p>
+<div class="top"><span id="sc">النقاط: 0</span><span id="pg">السؤال 1 من 10</span></div>
+<div class="bar"><i id="pb"></i></div>
+
+<div class="scene">
+<div class="say" id="say">أهلًا بكِ! أنا مريم، سنطبخ الهريس معًا. كل إجابة صحيحة عن الحال تُضيف مكوّنًا إلى القدر.</div>
+<svg viewBox="0 0 360 300" role="img" aria-label="فتاة عُمانية بالزي التقليدي تطبخ الهريس في قدر كبير وتمسك بملعقة التحريك">
+<defs><clipPath id="pc"><ellipse cx="250" cy="185" rx="74" ry="23"/></clipPath></defs>
+<rect class="bg" width="360" height="300"/>
+<rect class="gr" y="284" width="360" height="16"/>
+<!-- flag -->
+<line x1="18" y1="14" x2="18" y2="70" stroke="#8a6a3a" stroke-width="3"/>
+<rect x="20" y="16" width="12" height="28" fill="#C9202F"/><rect x="32" y="16" width="44" height="9" fill="#fff"/><rect x="32" y="25" width="44" height="10" fill="#C9202F"/><rect x="32" y="35" width="44" height="9" fill="#1D8E50"/><circle cx="26" cy="22" r="3" fill="#fff"/>
+<!-- fire -->
+<g><path class="fl" d="M205 288 Q214 258 226 288Z" fill="#F59F00"/><path class="fl" d="M232 288 Q248 244 266 288Z" fill="#E8590C"/><path class="fl" d="M270 288 Q282 260 296 288Z" fill="#F59F00"/></g>
+<!-- pot -->
+<path d="M174 185 Q176 266 200 272 L300 272 Q324 266 326 185Z" fill="#5C5966"/>
+<rect x="162" y="192" width="14" height="10" rx="5" fill="#44414d"/><rect x="324" y="192" width="14" height="10" rx="5" fill="#44414d"/>
+<path d="M190 200 Q192 255 205 265" stroke="#fff" opacity=".25" stroke-width="5" fill="none" stroke-linecap="round"/>
+<ellipse cx="250" cy="185" rx="78" ry="26" fill="#44414d"/>
+<ellipse cx="250" cy="185" rx="74" ry="23" fill="#1f1d24"/>
+<g clip-path="url(#pc)">
+<ellipse id="surf" cx="250" cy="185" rx="74" ry="23" fill="#D8B26A" opacity="0"/>
+<g id="gr"></g><g id="mt"></g>
+<ellipse id="wt" cx="250" cy="185" rx="74" ry="23" fill="#7CC4EE" opacity="0"/>
+<ellipse id="cr" cx="250" cy="185" rx="74" ry="23" fill="#F0DCB0" opacity="0"/>
+</g>
+<!-- spoon -->
+<g id="sp"><line x1="150" y1="110" x2="248" y2="205" stroke="#9A6B3F" stroke-width="6" stroke-linecap="round"/><ellipse cx="249" cy="206" rx="10" ry="6" transform="rotate(43 249 206)" fill="#8A5A30"/></g>
+<path d="M172 185 A78 26 0 0 0 328 185" fill="none" stroke="#6c6977" stroke-width="4"/>
+<g id="steam" opacity="0" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round"><path class="st" d="M225 165 q-6 -10 0 -18"/><path class="st" style="animation-delay:.8s" d="M250 162 q-6 -10 0 -18"/><path class="st" style="animation-delay:1.5s" d="M275 165 q-6 -10 0 -18"/></g>
+<g id="fx"></g>
+<!-- girl -->
+<g id="girl">
+<rect x="84" y="248" width="22" height="34" rx="4" fill="#C9202F"/><rect x="112" y="248" width="22" height="34" rx="4" fill="#C9202F"/>
+<rect x="84" y="270" width="22" height="9" fill="#E5B53B"/><rect x="112" y="270" width="22" height="9" fill="#E5B53B"/>
+<path d="M84 270 h22 M112 270 h22" stroke="#9a5b00" stroke-dasharray="3 2"/>
+<ellipse cx="95" cy="284" rx="13" ry="4" fill="#5a3a22"/><ellipse cx="123" cy="284" rx="13" ry="4" fill="#5a3a22"/>
+<path d="M82 140 L138 140 L152 256 L68 256Z" fill="#1D8E50"/>
+<path d="M68 244 L152 244 L153 257 L67 257Z" fill="#C9202F"/><path d="M68 250 H152" stroke="#F2C14E" stroke-width="2" stroke-dasharray="4 3"/>
+<path d="M98 140 L110 172 L122 140Z" fill="#F2C14E"/>
+<path d="M110 172 V244" stroke="#F2C14E" stroke-width="3" stroke-dasharray="2 5" stroke-linecap="round"/>
+<g fill="#F2C14E"><circle cx="90" cy="200" r="2.5"/><circle cx="130" cy="200" r="2.5"/><circle cx="86" cy="222" r="2.5"/><circle cx="134" cy="222" r="2.5"/></g>
+<path d="M85 148 Q70 188 80 212" stroke="#1D8E50" stroke-width="14" fill="none" stroke-linecap="round"/><circle cx="80" cy="218" r="6.5" fill="#E9B48A"/>
+<path d="M135 148 Q158 152 179 138" stroke="#1D8E50" stroke-width="14" fill="none" stroke-linecap="round"/><path d="M168 142 l-3 6" stroke="#C9202F" stroke-width="4"/>
+<circle cx="181" cy="138" r="7.5" fill="#E9B48A"/>
+<path d="M74 95 Q68 140 90 152 L130 152 Q152 140 146 95Z" fill="#fff" stroke="#1D8E50" stroke-width="2.5"/>
+<g fill="#C9202F"><circle cx="86" cy="146" r="2"/><circle cx="98" cy="150" r="2"/><circle cx="110" cy="151" r="2"/><circle cx="122" cy="150" r="2"/><circle cx="134" cy="146" r="2"/></g>
+<ellipse cx="110" cy="90" rx="36" ry="38" fill="#fff" stroke="#1D8E50" stroke-width="2.5"/>
+<ellipse cx="110" cy="94" rx="22" ry="26" fill="#E9B48A"/>
+<path d="M86 88 Q88 60 110 58 Q132 60 134 88 Q122 72 110 72 Q98 72 86 88Z" fill="#fff" stroke="#C9202F" stroke-width="2"/>
+<circle cx="101" cy="95" r="2.4" fill="#2b1a12"/><circle cx="119" cy="95" r="2.4" fill="#2b1a12"/>
+<path d="M97 88 q4 -3 8 0 M115 88 q4 -3 8 0" stroke="#2b1a12" stroke-width="1.6" fill="none"/>
+<circle cx="94" cy="104" r="4" fill="#e8806d" opacity=".4"/><circle cx="126" cy="104" r="4" fill="#e8806d" opacity=".4"/>
+<path id="mouth" d="M102 106 Q110 113 118 106" stroke="#7a2d2d" stroke-width="2" fill="none" stroke-linecap="round"/>
+</g>
+</svg>
+<div class="chips" id="chips">
+<span class="chip" id="c0">🌾 حبّ الهريس</span><span class="chip" id="c1">🥩 اللحم</span><span class="chip" id="c2">🧂 الملح</span><span class="chip" id="c3">💧 الماء</span><span class="chip" id="c4">🥄 التحريك</span>
+</div>
+</div>
+
+<div id="qa"></div>
+</div>
+
+<script>
+const Q=[
+{t:"عادَ العُمانيُّ إلى وطنِهِ فَرِحًا. ما الحال في الجملة؟",o:["فَرِحًا","العُمانيُّ","وطنِهِ","عادَ"],h:"اسألي: كيف عاد العُمانيُّ؟",e:"«فرحًا» حال منصوبة وعلامة نصبها الفتحة، تبيّن هيئة العُمانيّ وقت عودته."},
+{t:"نستخرج الحال بالسؤال بـ:",o:["كيف؟","متى؟","أين؟","لماذا؟"],h:"الحال تبيّن الهيئة.",e:"الحال تبيّن هيئة صاحبها، فنسأل بـ «كيف؟»."},
+{t:"تُرَفرِفُ رايةُ عُمانَ عاليةً. أعربي كلمة «عاليةً»:",o:["حال منصوبة وعلامة نصبها الفتحة","نعت مرفوع","خبر مرفوع","مفعول به منصوب"],h:"كيف ترفرف الراية؟ الجواب وصف لهيئتها.",e:"«عاليةً» حال منصوبة وعلامة نصبها الفتحة الظاهرة، وصاحبها «راية»."},
+{t:"وقفَ الطلابُ يُنشدونَ النشيدَ الوطنيَّ. نوع الحال «يُنشدون النشيدَ الوطنيَّ»:",o:["جملة فعلية في محل نصب","مفرد منصوب","جملة اسمية","شبه جملة"],h:"الجملة تبدأ بفعل مضارع.",e:"بدأت الجملة بفعل («يُنشدون»)، فهي جملة فعلية في محل نصب حال."},
+{t:"حضرَ المعلّمونَ مُبتسمينَ. علامة نصب الحال «مُبتسمينَ»:",o:["الياء لأنه جمع مذكر سالم","الفتحة","الألف","الكسرة"],h:"«مبتسمين» جمع مذكر سالم.",e:"جمع المذكر السالم يُنصب بالياء، فـ «مبتسمين» حال منصوبة وعلامة نصبها الياء."},
+{t:"أيُّ الجمل الآتية فيها حال؟",o:["عادَ الجنديُّ سالمًا","عادَ الجنديُّ السالمُ","عادَ الجنديُّ إلى بيتِهِ","حضرَ الجنديُّ"],h:"ابحثي عن كلمة نكرة منصوبة تبيّن الهيئة.",e:"«سالمًا» نكرة منصوبة تبيّن هيئة الجندي. أمّا «السالمُ» فنعت مرفوع."},
+{t:"قدّمتِ الفتاةُ الهريسَ ساخنًا. صاحب الحال في الجملة:",o:["الهريسَ","الفتاةُ","قدّمتِ","لا يوجد"],h:"من الذي وُصفَ بأنه ساخن؟",e:"السخونة هيئة الهريس لا الفتاة، فصاحب الحال هو «الهريسَ» (مفعول به)."},
+{t:"الأصل في الحال أن تكون:",o:["نكرة منصوبة","معرفة مرفوعة","نكرة مجرورة","معرفة منصوبة"],h:"الحال فضلة، ولا تأتي مرفوعة ولا مجرورة.",e:"الأصل في الحال أن تكون وصفًا نكرة منصوبة."},
+{t:"دخلَ الطلابُ المدرسةَ وهم يحملونَ العلمَ. نوع الحال «وهم يحملون العلمَ»:",o:["جملة اسمية (واو الحال + مبتدأ + خبر)","جملة فعلية","مفرد","شبه جملة"],h:"الجملة بدأت بواو الحال ثم ضمير.",e:"الواو للحال، و«هم» مبتدأ، و«يحملون العلم» خبر؛ والجملة الاسمية في محل نصب حال."},
+{t:"أكملي بحال مناسبة: يخدمُ المواطنُ وطنَهُ ......",o:["مُخلِصًا","مُخلِصٌ","مُخلِصٍ","المُخلِصَ"],h:"نكرة منصوبة تبيّن الهيئة.",e:"«مُخلِصًا» حال نكرة منصوبة. وحبّ الوطن يظهر في الإخلاص له."}
+];
+const ACT=[0,0,1,1,2,3,3,4,4,4];
+const MSG=["أضفتُ حبّ الهريس 🌾","أضفتُ المزيد من الحبّ 🌾","وضعتُ اللحم في القدر 🥩","أضفتُ المزيد من اللحم 🥩","رششتُ الملح 🧂","صببتُ الماء 💧","أضفتُ المزيد من الماء 💧","أُحرّك الهريس بالملعقة 🥄","نُحرّك حتى يتماسك 🥄","الهريس جاهز، بالهناء والعافية! 🎉"];
+const $=id=>document.getElementById(id),NS="http://www.w3.org/2000/svg";
+let i=0,score=0,tries=0,locked=false;
+const shuf=a=>{a=a.slice();for(let j=a.length-1;j>0;j--){const k=Math.floor(Math.random()*(j+1));[a[j],a[k]]=[a[k],a[j]]}return a};
+const mk=(t,at,p)=>{const e=document.createElementNS(NS,t);for(const k in at)e.setAttribute(k,at[k]);p.appendChild(e);return e};
+const say=t=>$('say').textContent=t;
+function scatter(g,n,fn){for(let k=0;k<n;k++){const a=Math.random()*6.283,r=Math.sqrt(Math.random())*.82;fn(250+Math.cos(a)*r*70,185+Math.sin(a)*r*20,g)}}
+function drop(kind){
+ for(let k=0;k<9;k++){const x=215+Math.random()*70;let e;
+  if(kind==='g')e=mk('ellipse',{cx:x,cy:60,rx:3.2,ry:2,fill:'#D8B26A'},$('fx'));
+  else if(kind==='m')e=mk('rect',{x:x,y:56,width:10,height:7,rx:2,fill:'#8A4B33'},$('fx'));
+  else if(kind==='s')e=mk('circle',{cx:x,cy:60,r:2,fill:'#fff',stroke:'#aab',"stroke-width":.6},$('fx'));
+  else e=mk('ellipse',{cx:x,cy:60,rx:3,ry:5,fill:'#6DB8EA'},$('fx'));
+  e.animate([{transform:'translateY(0)',opacity:1},{transform:'translateY(122px)',opacity:.9}],{duration:650,delay:k*70,easing:'ease-in',fill:'both'}).onfinish=()=>e.remove();}
+}
+function stir(ms){const s=$('sp');s.classList.add('stir');clearTimeout(stir.t);stir.t=setTimeout(()=>s.classList.remove('stir'),ms)}
+function apply(n){
+ const dot=(x,y,g)=>mk('circle',{cx:x,cy:y,r:2.2,fill:'#C99B4E'},g),mt=(x,y,g)=>mk('rect',{x:x-5,y:y-3,width:10,height:6,rx:2,fill:'#8A4B33',transform:`rotate(${Math.random()*80-40} ${x} ${y})`},g);
+ if(n===0){drop('g');setTimeout(()=>{$('surf').setAttribute('opacity','.9');scatter($('gr'),14,dot)},650)}
+ if(n===1){drop('g');setTimeout(()=>scatter($('gr'),14,dot),650)}
+ if(n===2){drop('m');setTimeout(()=>scatter($('mt'),4,mt),650)}
+ if(n===3){drop('m');setTimeout(()=>scatter($('mt'),4,mt),650)}
+ if(n===4){drop('s')}
+ if(n===5){drop('w');setTimeout(()=>$('wt').setAttribute('opacity','.5'),700)}
+ if(n===6){drop('w');setTimeout(()=>$('wt').setAttribute('opacity','.75'),700)}
+ if(n===7){stir(2200);$('steam').setAttribute('opacity','.5');$('cr').setAttribute('opacity','.4');$('wt').setAttribute('opacity','.5')}
+ if(n===8){stir(2200);$('cr').setAttribute('opacity','.75');$('wt').setAttribute('opacity','.25')}
+ if(n===9){stir(2600);$('cr').setAttribute('opacity','1');$('wt').setAttribute('opacity','0');$('steam').setAttribute('opacity','1')}
+ if(n<7)stir(900);
+ $('c'+ACT[n]).classList.add('on');
+}
+const girl=(f,d)=>$('girl').animate(f,{duration:d});
+function show(){
+ locked=false;tries=0;const q=Q[i];
+ $('pg').textContent=`السؤال ${i+1} من 10`;$('pb').style.width=(i/10*100)+'%';$('sc').textContent='النقاط: '+score;
+ $('qa').innerHTML=`<div class="card"><span class="tag">الحال</span><p class="q">${q.t}</p>
+ <div id="opts">${shuf(q.o.map((t,n)=>({t,n}))).map(o=>`<button class="opt" data-n="${o.n}">${o.t}</button>`).join('')}</div>
+ <div id="fb"></div></div>`;
+ document.querySelectorAll('.opt').forEach(b=>b.onclick=()=>pick(b,q));
+}
+function pick(b,q){
+ if(locked)return;
+ if(+b.dataset.n===0){
+  locked=true;const p=tries===0?10:tries===1?6:3;score+=p;
+  document.querySelectorAll('.opt').forEach(x=>x.disabled=true);b.classList.add('ok');
+  apply(i);say(MSG[i]);girl([{transform:'translateY(0)'},{transform:'translateY(-8px)'},{transform:'translateY(0)'}],400);
+  $('sc').textContent='النقاط: '+score;$('pb').style.width=((i+1)/10*100)+'%';
+  $('fb').innerHTML=`<div class="fb"><b>✅ أحسنتِ! +${p} نقطة</b><br>${q.e}</div><div class="center"><button class="btn" id="nx">${i===9?'عرض النتيجة':'السؤال التالي'}</button></div>`;
+  $('nx').onclick=()=>{i++;i<10?show():end()};$('nx').focus();
+ }else{
+  tries++;b.disabled=true;b.classList.add('no');
+  say('لا بأس، حاولي مرة أخرى! تلميح: '+q.h);
+  girl([{transform:'translateX(0)'},{transform:'translateX(-4px)'},{transform:'translateX(4px)'},{transform:'translateX(-4px)'},{transform:'translateX(0)'}],350);
+ }
+}
+function end(){
+ const st=score>=85?3:score>=60?2:1;
+ $('qa').innerHTML=`<div class="card center"><h1>أتممتِ الهريس! 🎉</h1><div class="stars">${'⭐'.repeat(st)}${'☆'.repeat(3-st)}</div>
+ <p class="q">نقاطكِ: ${score} من 100</p>
+ <p>الهريس طبق عُماني تقليدي يجمع الأسرة في الأعياد والمناسبات، والحال تُضيف إلى جملنا صورة حيّة كما يُضيف الإخلاص قيمة إلى حبّ الوطن.</p>
+ <button class="btn" id="again">العبي مرة أخرى</button></div>`;
+ $('again').onclick=()=>location.reload();
+}
+show();
+</script>
+</body>
+</html>
